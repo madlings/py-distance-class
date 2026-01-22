@@ -4,24 +4,34 @@ class Distance:
         self.km = km
 
     def __add__(self, other) -> "Distance":
-        lkm = 0
-        if(isinstance(other, (int, float))):
-            lkm = other
+        if( isinstance(other, (int, float))):
+            return Distance(self.km + other)
         elif isinstance(other, Distance):
-            lkm = other.km
+            return Distance(self.km + other.km)
         else:
             raise TypeError("given type not valid, use int or float")
-        return Distance(self.km + lkm)
 
-    def __mul__(self, other: "Distance") -> "Distance":
-    	return Distance(self.km * other.km)
+    def __mul__(self, other) -> "Distance":
+        if( isinstance(other, (int, float))):
+            return Distance(self.km * other)
+        elif isinstance(other, Distance):
+            return Distance(self.km * other.km)
+        else:
+            raise TypeError("given type not valid, use int or float")
 
-    def __truediv__(self, other: "Distance") -> "Distance":
-    	return Distance(round(self.km / other.km, 2))
+    def __truediv__(self, other) -> "Distance":
+        if( isinstance(other, (int, float))):
+            return Distance(round(self.km / other, 2))
+        elif isinstance(other, Distance):
+            return Distance(round(self.km / other.km, 2))
+        else:
+            raise TypeError("given type not valid, use int or float")
 
     def __iadd__(self, other) -> "Distance":
         if( isinstance(other, (int, float))):
             self.km += other
+        elif isinstance(other, Distance):
+            self.km += other.km
         else:
         	raise TypeError("given type not valid, use int or float")
         return self
@@ -73,3 +83,9 @@ class Distance:
             return self.km >= other.km
         else:
             raise TypeError("given type not valid, use int or float")
+    
+    def __str__(self) -> str:
+        return f"Distance is {self.km} kilometers"
+
+    def __repr__(self) -> str:
+        return f"Distance(km={self.km})"
